@@ -1,0 +1,2 @@
+API LINK: https://fakestoreapi.com/docs
+Frontend e-commerce project in React
