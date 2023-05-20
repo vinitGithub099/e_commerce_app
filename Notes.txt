@@ -1,2 +1,2 @@
-API LINK: https://fakestoreapi.com/docs
+API LINK: https://dummyjson.com/
 Frontend e-commerce project in React

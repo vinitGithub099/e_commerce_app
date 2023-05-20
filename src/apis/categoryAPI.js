@@ -3,7 +3,7 @@ import { api } from "./Utilities/axiosConfigs";
 export const categoriesAPI = {
   getAllCategories: async () => {
     const result = await api.request({
-      url: `/categories`,
+      url: `/products/categories`,
       method: `GET`,
       signal: new AbortController().signal,
     });
@@ -15,7 +15,7 @@ export const categoriesAPI = {
   },
   getSingleCategory: async (category) => {
     const result = await api.request({
-      url: `/categories/${category}`,
+      url: `/product/category/${category}`,
       method: `GET`,
       signal: new AbortController().signal,
     });

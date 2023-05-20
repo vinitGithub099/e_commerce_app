@@ -1,9 +1,9 @@
 import { api } from "./Utilities/axiosConfigs";
 
-export const productsAPI = {
-  getAllProducts: async () => {
+export const cartAPI = {
+  getAllCarts: async () => {
     const result = await api.request({
-      url: `/products`,
+      url: `/carts`,
       method: `GET`,
       signal: new AbortController().signal,
     });
@@ -13,11 +13,10 @@ export const productsAPI = {
       return result.message;
     }
   },
-  getSingleProduct: async (data, productId) => {
+  getSingleCart: async (cartId) => {
     const result = await api.request({
-      url: `/products/${productId}`,
+      url: `/carts/${cartId}`,
       method: `GET`,
-      data: data,
       signal: new AbortController().signal,
     });
     if (result.status === 200) {
@@ -26,11 +25,10 @@ export const productsAPI = {
       return result.message;
     }
   },
-  searchProducts: async (data, productName) => {
+  getCartsOfUser: async (cartId) => {
     const result = await api.request({
-      url: `/products/search?q=${productName}`,
+      url: `/carts/user/${cartId}`,
       method: `GET`,
-      data: data,
       signal: new AbortController().signal,
     });
     if (result.status === 200) {
@@ -39,33 +37,9 @@ export const productsAPI = {
       return result.message;
     }
   },
-  getPaginatedProducts: async (data, skip, limit) => {
+  addCart: async (data) => {
     const result = await api.request({
-      url: `/products?limit=${limit}&skip=${skip}`,
-      method: "GET",
-      data: data,
-      signal: new AbortController().signal,
-    });
-    if (result.status === 200) {
-      return result.data;
-    } else {
-      return result.message;
-    }
-  },
-  getCategoryProducts: async (category) => {
-    const result = await api.request({
-      url: `/products/category/${category}`,
-      method: `GET`,
-    });
-    if (result.status === 200) {
-      return result.data;
-    } else {
-      return result.message;
-    }
-  },
-  addProduct: async (data) => {
-    const result = await api.request({
-      url: `/products/add`,
+      url: `/carts/add`,
       method: `POST`,
       data: data,
       headers: { "Content-Type": "application/json" },
@@ -77,10 +51,10 @@ export const productsAPI = {
       return result.message;
     }
   },
-  updateProduct: async (data, productId) => {
+  updateCart: async (data, cartId) => {
     const result = await api.request({
-      url: `/products/${productId}`,
-      method: `PUT`,
+      url: `/carts/${cartId}`,
+      method: `POST`,
       data: data,
       headers: { "Content-Type": "application/json" },
       signal: new AbortController().signal,
@@ -91,9 +65,9 @@ export const productsAPI = {
       return result.message;
     }
   },
-  deleteProduct: async (productId) => {
+  deleteCart: async (cartId) => {
     const result = await api.request({
-      url: `/products/${productId}`,
+      url: `/carts/${cartId}`,
       method: `DELETE`,
       signal: new AbortController().signal,
     });
