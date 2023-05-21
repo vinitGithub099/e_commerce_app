@@ -1,5 +1,10 @@
 import PropTypes from "prop-types";
+import { useContext, useReducer, useState } from "react";
+import _ from "underscore";
+import { AppContext } from "../Context/AppContext";
+import { userReducer } from "../Reducers/reducer";
 import { authAPI } from "../apis/authAPI";
+
 const inputFields = [
   {
     className: "",
@@ -18,13 +23,24 @@ const inputFields = [
     required: true,
   },
 ];
-const loginUser = (loginUserData) =>
-  authAPI
-    .loginUser(loginUserData)
-    .then((res) => console.log("res: ", res))
-    .catch((error) => console.log("error: ", error));
 
 const LoginForm = () => {
+  const { userInitialState } = useContext(AppContext);
+  const [state, dispatch] = useReducer(userReducer, userInitialState);
+  const [errorMsg, setErrorMsg] = useState(null);
+  console.log(state);
+  const loginUser = (loginUserData) =>
+    authAPI
+      .loginUser(loginUserData)
+      .then((res) => {
+        console.log("res: ", res);
+        dispatch({ type: "set_user_data", payload: res });
+      })
+      .catch((error) => {
+        console.log(error);
+        setErrorMsg("Invalid Credentials!");
+      });
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
@@ -32,7 +48,6 @@ const LoginForm = () => {
     for (let [key, value] of formData.entries()) {
       loginFormData = { ...loginFormData, [key]: value };
     }
-    console.log(loginFormData);
     loginUser(loginFormData);
   };
 
@@ -45,12 +60,13 @@ const LoginForm = () => {
       ) : (
         <FormFallBack></FormFallBack>
       )}
-      <div className="mb-8">
+      <div className="mb-4">
         <LoginButton></LoginButton>
         <span className="text-xs text-lightPurple hover:text-darkPurple hover:cursor-pointer">
           Forgot password?
         </span>
       </div>
+      <ErrorMessage errorMsg={errorMsg}></ErrorMessage>
     </form>
   );
 };
@@ -101,4 +117,11 @@ const FormFallBack = () => {
       Oops! Login Form not found.
     </div>
   );
+};
+
+const ErrorMessage = ({ errorMsg }) =>
+  !_.isEmpty(errorMsg) && <p className="my-4 text-error text-md">{errorMsg}</p>;
+
+ErrorMessage.propTypes = {
+  errorMsg: PropTypes.string,
 };
