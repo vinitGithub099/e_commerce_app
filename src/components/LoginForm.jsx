@@ -24,7 +24,7 @@ const inputFields = [
   },
 ];
 
-const LoginForm = () => {
+export default function LoginForm() {
   const { userInitialState } = useContext(AppContext);
   const [state, dispatch] = useReducer(userReducer, userInitialState);
   const [errorMsg, setErrorMsg] = useState(null);
@@ -60,28 +60,25 @@ const LoginForm = () => {
       ) : (
         <FormFallBack></FormFallBack>
       )}
-      <div className="mb-4">
-        <LoginButton></LoginButton>
-        <span className="text-xs text-lightPurple hover:text-darkPurple hover:cursor-pointer">
-          Forgot password?
-        </span>
-      </div>
+      {inputFields && inputFields.length && (
+        <div className="mb-4">
+          <LoginButton></LoginButton>
+          <span className="text-xs text-lightPurple hover:text-darkPurple hover:cursor-pointer">
+            Forgot password?
+          </span>
+        </div>
+      )}
       <ErrorMessage errorMsg={errorMsg}></ErrorMessage>
     </form>
   );
-};
-
-export default LoginForm;
+}
 
 const Input = (props) => {
-  const { className, type, name, placeholder, htmlFor, required } = props;
-  const buildClassName = (appClassName) => {
-    const defaultClassName = "w-full mb-8 p-2 border-b outline-none";
-    return `${defaultClassName} ${className} ${appClassName}`;
-  };
+  const { type, name, placeholder, htmlFor, required } = props;
+
   return (
     <input
-      className={buildClassName(``)}
+      className="w-full mb-8 p-2 border-b outline-none"
       type={type}
       name={name}
       placeholder={placeholder}

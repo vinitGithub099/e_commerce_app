@@ -1,23 +1,17 @@
 import PropTypes from "prop-types";
-import { createContext } from "react";
-
+import { createContext, useReducer } from "react";
+import { productsReducer } from "../Reducers/reducer";
+import { productsInitialState } from "./InitialStates";
 export const AppContext = createContext(null);
-
-const userInitialState = {
-  id: PropTypes.number,
-  username: PropTypes.string,
-  email: PropTypes.string,
-  firstName: PropTypes.string,
-  lastName: PropTypes.string,
-  gender: PropTypes.string,
-  image: PropTypes.string,
-  token: PropTypes.string,
-};
 
 export const AppContextProvider = (props) => {
   const { children } = props;
+  const [productsState, productsDispatch] = useReducer(
+    productsReducer,
+    productsInitialState
+  );
   return (
-    <AppContext.Provider value={{ userInitialState }}>
+    <AppContext.Provider value={{ productsState, productsDispatch }}>
       {children}
     </AppContext.Provider>
   );
