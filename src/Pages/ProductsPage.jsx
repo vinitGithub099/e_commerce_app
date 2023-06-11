@@ -25,7 +25,7 @@ export default function ProductsPage() {
   }, []);
 
   return (
-    <div className="p-4 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4 xl:gap-8">
+    <div className="mx-auto max-w-6xl p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 md:gap-8">
       {!_.isEmpty(products) && products.length ? (
         products.map((product) => {
           return <ProductCard key={product.id} product={product}></ProductCard>;

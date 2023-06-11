@@ -52,7 +52,7 @@ export default function LoginForm() {
   };
 
   return (
-    <form className="px-8 w-full flex flex-col" onSubmit={handleSubmit}>
+    <form className="px-8 flex flex-col" onSubmit={handleSubmit}>
       {inputFields && inputFields.length ? (
         inputFields.map((inputField, index) => (
           <Input key={index} {...inputField}></Input>

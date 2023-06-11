@@ -6,11 +6,10 @@ export default function ProductCard({ product }) {
   return (
     <div
       role="card"
-      className="px-2 py-2 rounded-md flex flex-col justify-between shadow-md"
+      className="px-2 py-2 rounded-md flex flex-col justify-between shadow-md hover:shadow-lg transition 0.2s"
     >
       <ProductImage images={images}></ProductImage>
       <h2 className="pt-4 pb-2 font-bold text-xl text-center">{title}</h2>
-      {/* <p className="pb-4 text-xs font-semibold">{description}</p> */}
       <div className="flex flex-row items-center justify-between">
         <PriceTag
           price={price}
@@ -54,7 +53,7 @@ const PriceTag = ({ price, discountPercentage }) => {
     <div role="price" className="py-2 flex">
       <div className="">
         <p className="text-xs font-semibold">Price</p>
-        <h3 className="text-3xl font-semibold text-purple">{`$${getReducedPrice(
+        <h3 className="text-2xl font-semibold text-purple">{`$${getReducedPrice(
           price,
           discountPercentage
         )}`}</h3>
@@ -75,7 +74,7 @@ const RatingTag = ({ rating }) => {
   return (
     <div role="rating">
       <p className="text-xs font-semibold">Rating</p>
-      <h3 className="text-3xl font-semibold text-purple">{rating}</h3>
+      <h3 className="text-2xl font-semibold text-purple">{`${rating}/5`}</h3>
     </div>
   );
 };
