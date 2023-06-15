@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
 import { useEffect, useRef, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CloseIcon, Hamburger } from "../icons/Icons";
+import LoginButton from "./LoginButton";
 
 const navLinks = [
   { name: "Home", path: "/" },
@@ -30,21 +31,22 @@ export default function Navbar() {
   }, [toggleMenu]);
 
   return (
-    <nav className="w-full" ref={ref}>
-      <div className="py-2 px-2 sm:px-6 flex flex-row items-center justify-between shadow-sm shadow-purple">
+    <nav className="my-2 w-full" ref={ref}>
+      <div className="w-full px-2 sm:px-6 flex flex-row items-center justify-between sm:justify-center">
         <NavLinks
           className="hidden sm:flex flex-row"
           orientation={"horizontal"}
         ></NavLinks>
-        <div className="w-full flex flex-row items-center justify-between">
-          <ToggleMenu
-            className="max-sm:block hidden p-2 rounded-md hover:cursor-pointer hover:bg-dimPurple"
-            toggleMenu={toggleMenu}
-            setToggleMenu={setToggleMenu}
-            handleClick={handleToggleMenu}
-          ></ToggleMenu>
-          <LoginButton className="mx-4" buttonText="Login"></LoginButton>
-        </div>
+        <ToggleMenu
+          className="border-2 border-lightPurple max-sm:block p-1 hidden rounded-md hover:cursor-pointer hover:bg-dimPurple"
+          toggleMenu={toggleMenu}
+          setToggleMenu={setToggleMenu}
+          handleClick={handleToggleMenu}
+        ></ToggleMenu>
+        <LoginButton
+          className="block sm:hidden mx-4"
+          buttonText="Login"
+        ></LoginButton>
       </div>
       {toggleMenu ? (
         <NavLinks
@@ -58,13 +60,13 @@ export default function Navbar() {
 const NavLink = ({ link, orientation, className }) => {
   const buildClassName = () => {
     const defaultClassName =
-      "border-2 border-white font-semibold px-4 py-2 hover:cursor-pointer";
+      "border-2 border-white px-4 py-2 hover:cursor-pointer";
     let orientationClassName = "";
     if (orientation === "vertical") {
-      orientationClassName += "hover:bg-dimPurple";
+      orientationClassName += "hover:bg-dimPurple rounded-md";
     }
     if (orientation === "horizontal") {
-      orientationClassName += "hover:border-b-lightPurple rounded-md";
+      orientationClassName += "hover:border-b-lightPurple";
     }
     return `${defaultClassName} ${className} ${orientationClassName} `;
   };
@@ -86,7 +88,8 @@ const NavLinks = ({ className, orientation }) => {
     const defaultClassName = "hover:cursor-pointer";
     let orientationClassName = "";
     if (orientation === "vertical") {
-      orientationClassName += "m-2 shadow-md shadow-lightPurple rounded-md";
+      orientationClassName +=
+        "border-2 border-lightGray m-2 shadow-xl rounded-md";
     }
     if (orientation === "horizontal") {
       orientationClassName += "px-4";
@@ -134,25 +137,6 @@ ThemeButton.propTypes = {
   className: PropTypes.string,
   handleTheme: PropTypes.func,
 }; */
-
-const LoginButton = ({ buttonText, className }) => {
-  const navigate = useNavigate();
-  const handleLogin = () => navigate("/login");
-  const buildClassName = () => {
-    const defaultClassName = `border px-4 py-2 font-semibold rounded-md bg-darkPurple hover:bg-purple text-white text-xl`;
-    return `${defaultClassName} ${className}`;
-  };
-  return (
-    <button className={buildClassName()} onClick={handleLogin}>
-      {buttonText}
-    </button>
-  );
-};
-
-LoginButton.propTypes = {
-  buttonText: PropTypes.string,
-  className: PropTypes.string,
-};
 
 const ToggleMenu = ({ className, toggleMenu, handleClick }) => {
   return (

@@ -15,9 +15,11 @@ export default {
       gray: "#9ca3af",
       lightGray: "#d1d5db",
       dimGray: "#f3f4f6",
+      ["light-gray"]: "#f9fafb",
     },
     backgroundImage: {
       wave1: "url('./src/assets/wave_1.svg')",
+      loginBg: "url('./src/assets/rm222batch2-mind-03.jpg')",
     },
     extend: {},
   },

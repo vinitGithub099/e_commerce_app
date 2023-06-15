@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import { useContext, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import _ from "underscore";
 import { AppContext } from "../Context/AppContext";
 import { userReducer } from "../Reducers/reducer";
@@ -24,11 +24,16 @@ const inputFields = [
   },
 ];
 
-export default function LoginForm() {
+export default function LoginForm({ className }) {
   const { userInitialState } = useContext(AppContext);
   const [state, dispatch] = useReducer(userReducer, userInitialState);
+  const [formFields, setFormFields] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
   console.log(state);
+  const buildClassName = (instanceClassName) => {
+    const defaultClassName = "flex flex-col";
+    return `${defaultClassName} ${className} ${instanceClassName}`;
+  };
   const loginUser = (loginUserData) =>
     authAPI
       .loginUser(loginUserData)
@@ -43,19 +48,27 @@ export default function LoginForm() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const formData = new FormData(e.currentTarget);
-    let loginFormData = {};
-    for (let [key, value] of formData.entries()) {
-      loginFormData = { ...loginFormData, [key]: value };
-    }
-    loginUser(loginFormData);
+    loginUser(formFields);
   };
 
+  const handleChange = (e) => {
+    setFormFields({
+      ...formFields,
+      [e.currentTarget.name]: e.currentTarget.value,
+    });
+  };
+
+  useEffect(() => console.log(formFields), [formFields]);
+
   return (
-    <form className="px-8 flex flex-col" onSubmit={handleSubmit}>
+    <form className={buildClassName(``)} onSubmit={handleSubmit}>
       {inputFields && inputFields.length ? (
         inputFields.map((inputField, index) => (
-          <Input key={index} {...inputField}></Input>
+          <Input
+            key={index}
+            {...inputField}
+            handleChange={handleChange}
+          ></Input>
         ))
       ) : (
         <FormFallBack></FormFallBack>
@@ -63,9 +76,9 @@ export default function LoginForm() {
       {inputFields && inputFields.length && (
         <div className="mb-4">
           <LoginButton></LoginButton>
-          <span className="text-xs text-lightPurple hover:text-darkPurple hover:cursor-pointer">
+          <p className="py-2 text-sm text-center font-semibold text-lightPurple hover:text-darkPurple hover:cursor-pointer">
             Forgot password?
-          </span>
+          </p>
         </div>
       )}
       <ErrorMessage errorMsg={errorMsg}></ErrorMessage>
@@ -73,8 +86,12 @@ export default function LoginForm() {
   );
 }
 
+LoginForm.propTypes = {
+  className: PropTypes.string,
+};
+
 const Input = (props) => {
-  const { type, name, placeholder, htmlFor, required } = props;
+  const { type, name, placeholder, htmlFor, required, handleChange } = props;
 
   return (
     <input
@@ -84,6 +101,7 @@ const Input = (props) => {
       placeholder={placeholder}
       htmlFor={htmlFor}
       required={required}
+      onChange={handleChange}
     ></input>
   );
 };
@@ -95,6 +113,7 @@ Input.propTypes = {
   type: PropTypes.string,
   placeholder: PropTypes.string,
   required: PropTypes.bool,
+  handleChange: PropTypes.func,
 };
 
 const LoginButton = () => {
