@@ -5,7 +5,7 @@ import LoginButton from "./LoginButton";
 
 export default function Header() {
   return (
-    <header className="w-full py-4 px-4 sm:px-8 md:px-16  bg-white shadow-md flex flex-col sm:flex-row items-center justify-between">
+    <header className="w-full py-4 px-4 sm:px-8 md:px-16 bg-white shadow-md flex flex-col sm:flex-row items-center justify-between">
       <Logo></Logo>
       <div className="flex flex-row">
         <SearchBar></SearchBar>

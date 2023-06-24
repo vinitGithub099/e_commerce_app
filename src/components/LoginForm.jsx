@@ -10,7 +10,7 @@ const inputFields = [
     className: "",
     type: "text",
     name: "username",
-    placeholder: "username",
+    placeholder: "Username or Email Address",
     htmlFor: "",
     required: true,
   },
@@ -74,9 +74,9 @@ export default function LoginForm({ className }) {
         <FormFallBack></FormFallBack>
       )}
       {inputFields && inputFields.length && (
-        <div className="mb-4">
+        <div className="my-4">
           <LoginButton></LoginButton>
-          <p className="py-2 text-sm text-center font-semibold text-lightPurple hover:text-darkPurple hover:cursor-pointer">
+          <p className="inline-block mx-auto my-4 text-sm font-semibold text-blue-7 hover:cursor-pointer">
             Forgot password?
           </p>
         </div>
@@ -95,7 +95,7 @@ const Input = (props) => {
 
   return (
     <input
-      className="w-full mb-8 p-2 border-b outline-none"
+      className="w-full border border-lightGray bg-blue-0 p-2 my-2 outline-none"
       type={type}
       name={name}
       placeholder={placeholder}
@@ -119,7 +119,7 @@ Input.propTypes = {
 const LoginButton = () => {
   return (
     <button
-      className="w-full p-2 font-semibold rounded-md bg-darkPurple hover:bg-purple text-white text-xl"
+      className="w-full p-2 font-semibold rounded-sm bg-blue-6 hover:bg-blue-5 text-white text-md"
       type="submit"
     >
       Login
