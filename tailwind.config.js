@@ -26,6 +26,9 @@ export default {
       ["blue-7"]: "#2563EB",
       ["blue-8"]: "#1E40AF",
       ["blue-9"]: "#1E3A8A",
+      ["red-5"]: "#EF4444",
+      ["green-5"]: "#22C55E",
+      ["orange-5"]: "#F97316",
     },
     backgroundImage: {
       wave1: "url('./src/assets/wave_1.svg')",

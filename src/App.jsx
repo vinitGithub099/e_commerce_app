@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 
 import HomePage from "./Pages/HomePage";
 import RegisterUserPage from "./Pages/RegisterUserPage";
+import SignUpForm from "./components/SignUpForm";
 import "./index.css";
 export default function App() {
   return (
@@ -12,6 +13,11 @@ export default function App() {
           index
           path="/login"
           element={<RegisterUserPage></RegisterUserPage>}
+        ></Route>
+        <Route
+          index
+          path="/register"
+          element={<SignUpForm></SignUpForm>}
         ></Route>
       </Routes>
     </main>

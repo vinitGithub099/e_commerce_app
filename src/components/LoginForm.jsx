@@ -1,8 +1,7 @@
 import PropTypes from "prop-types";
-import { useContext, useEffect, useReducer, useState } from "react";
+import { useContext, useState } from "react";
 import _ from "underscore";
 import { AppContext } from "../Context/AppContext";
-import { userReducer } from "../Reducers/reducer";
 import { authAPI } from "../apis/authAPI";
 
 const inputFields = [
@@ -25,21 +24,23 @@ const inputFields = [
 ];
 
 export default function LoginForm({ className }) {
-  const { userInitialState } = useContext(AppContext);
-  const [state, dispatch] = useReducer(userReducer, userInitialState);
+  const {
+    dispatchActions: { dispatchUser },
+  } = useContext(AppContext);
   const [formFields, setFormFields] = useState({});
   const [errorMsg, setErrorMsg] = useState(null);
-  console.log(state);
+
   const buildClassName = (instanceClassName) => {
     const defaultClassName = "flex flex-col";
     return `${defaultClassName} ${className} ${instanceClassName}`;
   };
+
   const loginUser = (loginUserData) =>
     authAPI
       .loginUser(loginUserData)
       .then((res) => {
         console.log("res: ", res);
-        dispatch({ type: "set_user_data", payload: res });
+        dispatchUser({ type: "set_user_data", payload: res });
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +59,7 @@ export default function LoginForm({ className }) {
     });
   };
 
-  useEffect(() => console.log(formFields), [formFields]);
+  // useEffect(() => console.log(formFields), [formFields]);
 
   return (
     <form className={buildClassName(``)} onSubmit={handleSubmit}>

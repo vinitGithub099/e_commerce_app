@@ -6,15 +6,15 @@ import ProductCard from "../components/ProductCard";
 
 export default function ProductsPage() {
   const {
-    productsState: { products },
-    productsDispatch,
+    state: { products },
+    dispatchActions: { dispatchProduct },
   } = useContext(AppContext);
   const getAllProducts = () => {
     productsAPI
       .getAllProducts()
       .then((res) => {
         console.log(res);
-        productsDispatch({ type: "set_products", payload: res.products });
+        dispatchProduct({ type: "set_products", payload: res.products });
       })
       .catch((error) => console.log(error));
   };

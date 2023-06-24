@@ -1,17 +1,13 @@
 import PropTypes from "prop-types";
-import { createContext, useReducer } from "react";
-import { productsReducer } from "../Reducers/reducer";
-import { productsInitialState } from "./InitialStates";
+import { createContext } from "react";
+import { useConnect } from "./Store/Store";
 export const AppContext = createContext(null);
 
 export const AppContextProvider = (props) => {
   const { children } = props;
-  const [productsState, productsDispatch] = useReducer(
-    productsReducer,
-    productsInitialState
-  );
+  const [state, dispatchActions] = useConnect();
   return (
-    <AppContext.Provider value={{ productsState, productsDispatch }}>
+    <AppContext.Provider value={{ state, dispatchActions }}>
       {children}
     </AppContext.Provider>
   );
